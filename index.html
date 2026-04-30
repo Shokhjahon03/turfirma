@@ -14,13 +14,15 @@
     <style>
         /* ================= VARIABLES & RESET ================= */
         :root {
-            --bg-color: #030014;
-            --text-main: #f5f5f7;
-            --text-muted: #a1a1aa;
-            --accent-1: #ff2a5f;
-            --accent-2: #00d2ff;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --bg-color: #f5f0e8;
+            --bg-secondary: #ece6d9;
+            --text-main: #1a1a2e;
+            --text-muted: #6b6b7a;
+            --accent-1: #e8354a;
+            --accent-2: #0077cc;
+            --glass-bg: rgba(255, 255, 255, 0.55);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --card-shadow: 0 8px 40px rgba(0, 0, 0, 0.10);
         }
 
         * {
@@ -62,8 +64,8 @@
         .orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.5;
+            filter: blur(120px);
+            opacity: 0.35;
             animation: floatOrb 20s infinite alternate ease-in-out;
         }
 
@@ -72,7 +74,7 @@
             left: -10%;
             width: 50vw;
             height: 50vw;
-            background: var(--accent-1);
+            background: #f7b2bb;
         }
 
         .orb-2 {
@@ -80,7 +82,7 @@
             right: -10%;
             width: 60vw;
             height: 60vw;
-            background: var(--accent-2);
+            background: #b3d9f7;
             animation-delay: -5s;
         }
 
@@ -88,7 +90,7 @@
             position: fixed;
             inset: 0;
             z-index: -1;
-            opacity: 0.04;
+            opacity: 0.03;
             pointer-events: none;
             background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
         }
@@ -103,7 +105,7 @@
             }
         }
 
-        /* ================= YAXSHILANGAN PRELOADER ================= */
+        /* ================= PRELOADER ================= */
         #loader {
             position: fixed;
             inset: 0;
@@ -120,7 +122,7 @@
             position: relative;
             width: 150px;
             height: 150px;
-            border: 2px dashed rgba(0, 210, 255, 0.3);
+            border: 2px dashed rgba(0, 119, 204, 0.3);
             border-radius: 50%;
             animation: spinPath 4s linear infinite;
         }
@@ -132,7 +134,7 @@
             transform: translateX(-50%);
             font-size: 2rem;
             color: var(--accent-2);
-            text-shadow: 0 0 15px var(--accent-2);
+            text-shadow: 0 0 15px rgba(0, 119, 204, 0.4);
         }
 
         .loader-text {
@@ -173,23 +175,23 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.7);
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(10px);
-            color: #fff;
+            color: var(--text-main);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: 0.3s ease;
+            box-shadow: var(--card-shadow);
         }
 
         .auto-scroll-btn:hover {
             background: var(--accent-2);
             transform: scale(1.1);
-            color: #000;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
-            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(0, 119, 204, 0.4);
         }
 
         /* ================= NAVBAR ================= */
@@ -210,12 +212,13 @@
         .nav-links {
             display: flex;
             gap: 30px;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.75);
             padding: 15px 30px;
             border-radius: 40px;
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             pointer-events: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
         }
 
         .nav-links li a {
@@ -224,6 +227,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: 0.3s;
+            color: var(--text-main);
         }
 
         .nav-links li a:hover {
@@ -237,9 +241,9 @@
         }
 
         .lang-switch button {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.75);
             border: 1px solid var(--glass-border);
-            color: #fff;
+            color: var(--text-main);
             padding: 10px 15px;
             border-radius: 50%;
             cursor: pointer;
@@ -247,12 +251,13 @@
             backdrop-filter: blur(10px);
             width: 45px;
             height: 45px;
+            font-weight: 600;
         }
 
         .lang-switch button.active {
             background: var(--accent-1);
             border-color: var(--accent-1);
-            font-weight: bold;
+            color: #fff;
         }
 
         /* ================= HERO SECTION ================= */
@@ -273,6 +278,7 @@
             font-weight: 700;
             position: relative;
             z-index: 2;
+            color: var(--text-main);
         }
 
         .hero-title span {
@@ -281,7 +287,7 @@
 
         .hero-title .stroke {
             color: transparent;
-            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.2);
+            -webkit-text-stroke: 2px rgba(26, 26, 46, 0.2);
         }
 
         .hero-img-container {
@@ -295,6 +301,7 @@
             overflow: hidden;
             border: 1px solid var(--glass-border);
             z-index: 1;
+            box-shadow: var(--card-shadow);
         }
 
         .hero-img-container img {
@@ -335,6 +342,7 @@
             font-size: 4rem;
             z-index: 10;
             pointer-events: none;
+            color: var(--text-main);
         }
 
         .track {
@@ -352,7 +360,7 @@
             position: relative;
             border-radius: 30px;
             overflow: hidden;
-            background: var(--glass-bg);
+            background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
             display: flex;
@@ -360,11 +368,13 @@
             justify-content: flex-end;
             padding: 40px;
             transition: 0.4s;
+            box-shadow: var(--card-shadow);
         }
 
         .h-card:hover {
             transform: translateY(-15px);
             border-color: var(--accent-2);
+            box-shadow: 0 20px 60px rgba(0, 119, 204, 0.15);
         }
 
         .h-card img {
@@ -374,20 +384,20 @@
             height: 100%;
             object-fit: cover;
             z-index: -2;
-            opacity: 0.6;
+            opacity: 0.55;
             transition: 0.5s;
         }
 
         .h-card:hover img {
             transform: scale(1.1);
-            opacity: 0.9;
+            opacity: 0.75;
         }
 
         .h-card::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, #000 0%, transparent 80%);
+            background: linear-gradient(to top, rgba(245, 240, 232, 0.92) 0%, transparent 70%);
             z-index: -1;
         }
 
@@ -396,6 +406,12 @@
             font-size: 3rem;
             margin-bottom: 10px;
             line-height: 1;
+            color: var(--text-main);
+        }
+
+        .h-card p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
         }
 
         .card-price {
@@ -414,19 +430,20 @@
             padding: 15px 30px;
             border-radius: 30px;
             background: transparent;
-            border: 1px solid #fff;
-            color: #fff;
+            border: 1.5px solid var(--text-main);
+            color: var(--text-main);
             cursor: pointer;
             transition: 0.4s;
             width: max-content;
+            font-weight: 600;
         }
 
         .btn-modern:hover {
-            background: #fff;
-            color: #000;
+            background: var(--text-main);
+            color: var(--bg-color);
         }
 
-        /* ================= SCROLL VIDEO & TEXT SYNC (Rasmdagi Qism) ================= */
+        /* ================= VIDEO SECTION ================= */
         .video-section {
             height: 300vh;
             position: relative;
@@ -442,6 +459,7 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            background: var(--bg-secondary);
         }
 
         .video-sticky video {
@@ -451,7 +469,7 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
-            opacity: 0.4;
+            opacity: 0.3;
             transition: opacity 0.5s;
         }
 
@@ -469,6 +487,7 @@
             margin-bottom: 20px;
             text-transform: uppercase;
             line-height: 1;
+            color: var(--text-main);
         }
 
         .video-content p {
@@ -494,19 +513,21 @@
         }
 
         .service-card {
-            background: var(--glass-bg);
+            background: rgba(255, 255, 255, 0.7);
             border: 1px solid var(--glass-border);
             padding: 50px 30px;
             border-radius: 30px;
             text-align: center;
             backdrop-filter: blur(10px);
             transition: 0.4s;
+            box-shadow: var(--card-shadow);
         }
 
         .service-card:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.9);
             transform: translateY(-10px);
             border-color: var(--accent-1);
+            box-shadow: 0 20px 60px rgba(232, 53, 74, 0.12);
         }
 
         .service-icon {
@@ -519,6 +540,7 @@
             font-family: 'Oswald', sans-serif;
             font-size: 2rem;
             margin-bottom: 15px;
+            color: var(--text-main);
         }
 
         .service-card p {
@@ -526,69 +548,203 @@
             line-height: 1.6;
         }
 
-        /* ================= TEAM SECTION ================= */
-        .team-section {
-            padding: 100px 10% 150px;
-            background: var(--bg-color);
+        /* ================= NEW: STATISTICS SECTION ================= */
+        .stats-section {
+            padding: 120px 10%;
             position: relative;
             z-index: 5;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .team-card {
-            position: relative;
-            border-radius: 20px;
+            background: var(--bg-secondary);
             overflow: hidden;
-            height: 350px;
         }
 
-        .team-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 0.5s;
-            filter: grayscale(80%);
+        .stats-section-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
         }
 
-        .team-card:hover img {
-            filter: grayscale(0%);
-            transform: scale(1.05);
+        .stats-left h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            color: var(--text-main);
+            margin-bottom: 25px;
         }
 
-        .team-info {
+        .stats-left p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 500px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(10px);
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 100%;
-            padding: 20px;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
-            transform: translateY(20px);
-            transition: 0.4s;
-            opacity: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s ease;
         }
 
-        .team-card:hover .team-info {
-            transform: translateY(0);
-            opacity: 1;
+        .stat-card.in-view::before {
+            transform: scaleX(1);
         }
 
-        .team-info h4 {
-            font-size: 1.5rem;
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-number {
             font-family: 'Oswald', sans-serif;
-            color: #fff;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-1);
+            line-height: 1;
+            margin-bottom: 10px;
         }
 
-        .team-info p {
+        .stat-number .suffix {
+            font-size: 2.5rem;
             color: var(--accent-2);
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* ================= NEW: TESTIMONIALS SECTION ================= */
+        .testimonials-section {
+            padding: 130px 10%;
+            position: relative;
+            z-index: 5;
+            background: var(--bg-color);
+            overflow: hidden;
+        }
+
+        .testimonials-section h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            text-align: center;
+            color: var(--text-main);
+            margin-bottom: 70px;
+        }
+
+        .testimonials-track {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+        }
+
+        .testi-card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 45px 35px;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(12px);
+            position: relative;
+            transition: transform 0.15s ease, box-shadow 0.4s ease;
+            cursor: default;
+            will-change: transform;
+        }
+
+        .testi-card:hover {
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.14);
+        }
+
+        .testi-quote {
+            font-size: 4rem;
+            line-height: 1;
+            color: var(--accent-1);
+            font-family: 'Oswald', sans-serif;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .testi-text {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 35px;
+            font-style: italic;
+        }
+
+        .testi-author {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .testi-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--bg-secondary);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .testi-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-main);
+        }
+
+        .testi-location {
+            font-size: 0.85rem;
+            color: var(--accent-2);
+            font-weight: 500;
+        }
+
+        .testi-stars {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: #f5a623;
             font-size: 0.9rem;
-            font-weight: bold;
-            margin-top: 5px;
+            letter-spacing: 2px;
+        }
+
+        /* Scroll reveal animate */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal-on-scroll.revealed {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* ================= ABOUT SECTION ================= */
@@ -598,7 +754,7 @@
             align-items: center;
             justify-content: space-between;
             position: relative;
-            background: var(--bg-color);
+            background: var(--bg-secondary);
             z-index: 5;
         }
 
@@ -610,6 +766,7 @@
             font-family: 'Oswald', sans-serif;
             font-size: 4rem;
             margin-bottom: 30px;
+            color: var(--text-main);
         }
 
         .about-images {
@@ -630,6 +787,7 @@
             top: 0;
             left: 0;
             z-index: 1;
+            box-shadow: var(--card-shadow);
         }
 
         .img-2 {
@@ -638,12 +796,13 @@
             bottom: -10%;
             right: -10%;
             z-index: 2;
-            border: 5px solid var(--bg-color);
+            border: 5px solid var(--bg-secondary);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
         }
 
         /* ================= CONTACT FOOTER ================= */
         .contact-footer {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(30px);
             border-top: 1px solid var(--glass-border);
             padding: 100px 10% 50px;
@@ -663,6 +822,7 @@
             font-size: clamp(3rem, 6vw, 6rem);
             line-height: 1.1;
             margin-bottom: 40px;
+            color: var(--text-main);
         }
 
         .custom-form {
@@ -675,12 +835,16 @@
             width: 100%;
             background: transparent;
             border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
+            border-bottom: 1.5px solid rgba(26, 26, 46, 0.2);
+            color: var(--text-main);
             font-size: 1.2rem;
             padding: 15px 0;
             outline: none;
             transition: 0.3s;
+        }
+
+        .custom-input::placeholder {
+            color: var(--text-muted);
         }
 
         .custom-input:focus {
@@ -689,7 +853,7 @@
 
         .submit-btn {
             background: var(--accent-2);
-            color: #000;
+            color: #fff;
             border: none;
             padding: 20px;
             font-size: 1.2rem;
@@ -701,8 +865,18 @@
         }
 
         .submit-btn:hover {
-            background: #fff;
+            background: var(--accent-1);
             transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(232, 53, 74, 0.3);
+        }
+
+        /* ================= SECTION TITLE SHARED ================= */
+        .section-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            text-align: center;
+            color: var(--text-main);
+            margin-bottom: 20px;
         }
 
         /* ================= RESPONSIVE ================= */
@@ -724,6 +898,17 @@
 
             .track {
                 padding-left: 5vw;
+            }
+
+            .stats-section-inner {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .testimonials-track {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
             }
         }
 
@@ -762,13 +947,17 @@
             .video-sticky video {
                 display: none;
             }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Yaxshilangan Preloader -->
+    <!-- Preloader -->
     <div id="loader">
         <div class="flight-path">
             <i class="fa-solid fa-plane loader-plane"></i>
@@ -776,14 +965,14 @@
         <div class="loader-text">SKYLUXE</div>
     </div>
 
-    <!-- Ambient orqa fon -->
+    <!-- Ambient bg -->
     <div class="ambient-bg">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
     </div>
     <div class="noise"></div>
 
-    <!-- Avto Scroll -->
+    <!-- Auto Scroll -->
     <button class="auto-scroll-btn" id="autoScrollBtn" title="Auto Scroll">
         <i class="fa-solid fa-play" id="scrollIcon"></i>
     </button>
@@ -830,7 +1019,7 @@
                 <div class="h-card">
                     <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop"
                         alt="Maldives">
-                    <div class="card-price" style="background: var(--accent-2); color: #000;">$3,450</div>
+                    <div class="card-price" style="background: var(--accent-2);">$3,450</div>
                     <h3 data-i18n="city_maldives">Maldiv</h3>
                     <p data-i18n="desc_maldives">Shovqindan uzoqda, shaxsiy villangiz.</p>
                     <button class="btn-modern" data-i18n="book_btn">Batafsil</button>
@@ -846,7 +1035,7 @@
                 <div class="h-card">
                     <img src="https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?q=80&w=2070&auto=format&fit=crop"
                         alt="Istanbul">
-                    <div class="card-price" style="background: var(--accent-2); color: #000;">$950</div>
+                    <div class="card-price" style="background: var(--accent-2);">$950</div>
                     <h3 data-i18n="city_istanbul">Istanbul</h3>
                     <p data-i18n="desc_istanbul">Tarix va madaniyat o'chog'i.</p>
                     <button class="btn-modern" data-i18n="book_btn">Batafsil</button>
@@ -855,14 +1044,12 @@
         </div>
     </section>
 
-    <!-- SCROLL VIDEO & TEXT SYNC (Rasmdagi Section) -->
+    <!-- SCROLL VIDEO & TEXT SYNC -->
     <section class="video-section" id="video-experience">
         <div class="video-sticky">
-            <!-- Mahalliy bgvi.mp4 ga moslangan -->
             <video id="scrollVideo" muted playsinline preload="auto">
                 <source src="bgvi.mp4" type="video/mp4">
             </video>
-
             <div class="video-content" id="vidTextContent">
                 <p data-i18n="vid_sub">Sayohat Atmosferasi</p>
                 <h2 data-i18n="vid_title">Biz Bilan Bulutlarda<br>Pervoz Qiling</h2>
@@ -872,8 +1059,7 @@
 
     <!-- SERVICES SECTION -->
     <section class="services-section" id="services">
-        <h2 style="font-family: 'Oswald', sans-serif; font-size: 3.5rem; text-align: center;" data-i18n="serv_title">
-            Bizning Xizmatlar</h2>
+        <h2 class="section-title" data-i18n="serv_title">Bizning Xizmatlar</h2>
         <div class="services-grid">
             <div class="service-card">
                 <i class="fa-solid fa-passport service-icon"></i>
@@ -894,8 +1080,85 @@
         </div>
     </section>
 
-    <!-- TEAM SECTION -->
+    <!-- ===== YANGI SECTION 1: STATISTIKA (scroll counter) ===== -->
+    <section class="stats-section" id="stats">
+        <div class="stats-section-inner">
+            <div class="stats-left reveal-on-scroll">
+                <h2 data-i18n="stats_title">Raqamlar<br>Bizni Ifoda Etadi</h2>
+                <p data-i18n="stats_desc">O'n yillik tajribamiz davomida minglab mijozlarga ishonchli va hashamatli
+                    sayohat xizmatlarini ko'rsatib kelmoqdamiz. Har bir raqam ortida haqiqiy yurak va mehnat yotadi.</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card reveal-on-scroll" style="transition-delay:0.1s">
+                    <div class="stat-number"><span class="count-up" data-target="12400" data-suffix="+">0</span><span
+                            class="suffix">+</span></div>
+                    <div class="stat-label" data-i18n="stat_1">Xursand Mijozlar</div>
+                </div>
+                <div class="stat-card reveal-on-scroll" style="transition-delay:0.2s">
+                    <div class="stat-number"><span class="count-up" data-target="48" data-suffix="+">0</span><span
+                            class="suffix">+</span></div>
+                    <div class="stat-label" data-i18n="stat_2">Mamlakat</div>
+                </div>
+                <div class="stat-card reveal-on-scroll" style="transition-delay:0.3s">
+                    <div class="stat-number"><span class="count-up" data-target="10" data-suffix="">0</span><span
+                            class="suffix"></span></div>
+                    <div class="stat-label" data-i18n="stat_3">Yillik Tajriba</div>
+                </div>
+                <div class="stat-card reveal-on-scroll" style="transition-delay:0.4s">
+                    <div class="stat-number"><span class="count-up" data-target="98" data-suffix="%">0</span><span
+                            class="suffix">%</span></div>
+                    <div class="stat-label" data-i18n="stat_4">Mamnuniyat Darajasi</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- ===== YANGI SECTION 2: TESTIMONIALS (mouse parallax) ===== -->
+    <section class="testimonials-section" id="testimonials">
+        <h2 class="reveal-on-scroll" data-i18n="testi_title">Mijozlarimiz Fikri</h2>
+        <div class="testimonials-track" id="testiTrack">
+            <div class="testi-card reveal-on-scroll" data-depth="0.04" style="transition-delay:0.05s">
+                <div class="testi-stars">★★★★★</div>
+                <div class="testi-quote">"</div>
+                <p class="testi-text" data-i18n="testi_1_text">SkyLuxe bilan Dubayga borishim hayotimdagi eng yaxshi
+                    sayohat bo'ldi. Har bir detal mukammal tashkil qilingan edi. Yana albatta qaytaman!</p>
+                <div class="testi-author">
+                    <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Nilufar">
+                    <div>
+                        <div class="testi-name" data-i18n="testi_1_name">Nilufar Rashidova</div>
+                        <div class="testi-location">Toshkent, O'zbekiston</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card reveal-on-scroll" data-depth="0.07" style="transition-delay:0.15s">
+                <div class="testi-stars">★★★★★</div>
+                <div class="testi-quote">"</div>
+                <p class="testi-text" data-i18n="testi_2_text">Viza va transfer masalasida juda tezkor va professional
+                    xizmat ko'rsatishdi. Oilam bilan Maldivda dam olishimiz uchun hamma narsani a'lo darajada tayyorlab
+                    berishdi.</p>
+                <div class="testi-author">
+                    <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Jasur">
+                    <div>
+                        <div class="testi-name" data-i18n="testi_2_name">Jasur Mirzayev</div>
+                        <div class="testi-location">Samarqand, O'zbekiston</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card reveal-on-scroll" data-depth="0.05" style="transition-delay:0.25s">
+                <div class="testi-stars">★★★★★</div>
+                <div class="testi-quote">"</div>
+                <p class="testi-text" data-i18n="testi_3_text">Parijda o'tkazgan 7 kunim tushimdagi kabi o'tdi.
+                    Mehmonxona tanlovi, ekskursiyalar va kutib olish xizmati — barchasi eng yuqori saviyada!</p>
+                <div class="testi-author">
+                    <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Malika">
+                    <div>
+                        <div class="testi-name" data-i18n="testi_3_name">Malika Yusupova</div>
+                        <div class="testi-location">Buxoro, O'zbekiston</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- ABOUT SECTION -->
     <section class="about-section" id="about">
@@ -934,7 +1197,7 @@
 
     <!-- ================= JAVASCRIPT ================= -->
     <script>
-        // 1. ISHONCHLI PRELOADER YOPILISHI
+        // 1. PRELOADER
         const hideLoader = () => {
             const loader = document.getElementById('loader');
             if (loader) {
@@ -942,15 +1205,13 @@
                 setTimeout(() => loader.style.display = 'none', 800);
             }
         };
-        // Oyna yuklanganda yoki har ehtimolga qarshi 2.5 soniyadan so'ng yopiladi
         window.addEventListener('load', hideLoader);
         setTimeout(hideLoader, 2500);
 
-        // 2. SCROLL EVENTS (Horizontal + Text/Video Sync)
+        // 2. SCROLL EVENTS
         const horizontalSection = document.getElementById('tours');
         const track = document.getElementById('horizontalTrack');
         const heroImage = document.getElementById('heroImage');
-
         const videoSection = document.getElementById('video-experience');
         const scrollVideo = document.getElementById('scrollVideo');
         const vidTextContent = document.getElementById('vidTextContent');
@@ -970,7 +1231,6 @@
                 if (window.innerWidth > 768) {
                     const hTop = horizontalSection.offsetTop;
                     const hHeight = horizontalSection.offsetHeight;
-
                     if (scrollY >= hTop && scrollY <= (hTop + hHeight - winHeight)) {
                         let progress = (scrollY - hTop) / (hHeight - winHeight);
                         let maxScroll = track.scrollWidth - window.innerWidth + (window.innerWidth * 0.1);
@@ -983,28 +1243,24 @@
                     }
                 }
 
-                // C) VIDEO VA TEXT SCROLL SYNC (Rasmdagi xususiyat qo'shildi)
+                // C) Video Scroll Sync
                 if (window.innerWidth > 768) {
                     const vTop = videoSection.offsetTop;
                     const vHeight = videoSection.offsetHeight;
-
                     if (scrollY >= vTop && scrollY <= (vTop + vHeight - winHeight)) {
                         let progress = (scrollY - vTop) / (vHeight - winHeight);
-
-                        // Video sync
                         if (scrollVideo && scrollVideo.readyState >= 2) {
                             scrollVideo.currentTime = progress * scrollVideo.duration;
                         }
-
-                        // Text sync (Zoom out va xira tortish effekti)
                         if (vidTextContent) {
-                            // Text pastdan tepaga qarab harakatlanadi va kattalashadi
                             vidTextContent.style.transform = `scale(${1 + progress * 0.8})`;
-                            // Oxiriga yetganda sekin yo'qoladi
                             vidTextContent.style.opacity = 1 - (progress * 1.5);
                         }
                     }
                 }
+
+                // D) STATS: reveal + counter trigger
+                revealObservedCheck();
             });
         });
 
@@ -1027,20 +1283,105 @@
             isAutoScrolling = !isAutoScrolling;
             if (isAutoScrolling) {
                 scrollIcon.classList.replace('fa-play', 'fa-pause');
-                autoScrollBtn.style.background = 'var(--accent-2)'; autoScrollBtn.style.color = '#000';
+                autoScrollBtn.style.background = 'var(--accent-2)'; autoScrollBtn.style.color = '#fff';
                 smoothScrollLoop();
             } else {
                 scrollIcon.classList.replace('fa-pause', 'fa-play');
-                autoScrollBtn.style.background = 'rgba(255,255,255,0.1)'; autoScrollBtn.style.color = '#fff';
+                autoScrollBtn.style.background = 'rgba(255,255,255,0.7)'; autoScrollBtn.style.color = 'var(--text-main)';
                 cancelAnimationFrame(animationFrameId);
             }
         }
         autoScrollBtn.addEventListener('click', toggleAutoScroll);
         window.addEventListener('wheel', () => {
-            if (isAutoScrolling) { cancelAnimationFrame(animationFrameId); setTimeout(() => { if (isAutoScrolling) smoothScrollLoop(); }, 1500); }
+            if (isAutoScrolling) {
+                cancelAnimationFrame(animationFrameId);
+                setTimeout(() => { if (isAutoScrolling) smoothScrollLoop(); }, 1500);
+            }
         });
 
-        // 4. TIL TARJIMALARI
+        // 4. SCROLL REVEAL (IntersectionObserver)
+        const revealEls = document.querySelectorAll('.reveal-on-scroll');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    // Trigger stat counter
+                    const counter = entry.target.querySelector('.count-up');
+                    if (counter && !counter.dataset.done) {
+                        animateCounter(counter);
+                        counter.dataset.done = '1';
+                    }
+                    // Add bar animation
+                    entry.target.classList.add('in-view');
+                }
+            });
+        }, { threshold: 0.15 });
+        revealEls.forEach(el => revealObserver.observe(el));
+
+        function revealObservedCheck() {
+            // Fallback for scroll-based reveal (covers old browsers)
+        }
+
+        // 5. COUNT-UP ANIMATION
+        function animateCounter(el) {
+            const target = parseInt(el.dataset.target);
+            const duration = 1800;
+            const start = performance.now();
+            function step(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(eased * target);
+                el.textContent = current.toLocaleString();
+                if (progress < 1) requestAnimationFrame(step);
+                else el.textContent = target.toLocaleString();
+            }
+            requestAnimationFrame(step);
+        }
+
+        // Also trigger counters inside stat-cards (which wrap reveal-on-scroll)
+        document.querySelectorAll('.stat-card').forEach(card => {
+            const counter = card.querySelector('.count-up');
+            if (!counter) return;
+            const obs = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !counter.dataset.done) {
+                    animateCounter(counter);
+                    counter.dataset.done = '1';
+                }
+            }, { threshold: 0.5 });
+            obs.observe(card);
+        });
+
+        // 6. MOUSE PARALLAX ON TESTIMONIAL CARDS
+        const testiSection = document.getElementById('testimonials');
+        const testiCards = document.querySelectorAll('.testi-card');
+
+        testiSection.addEventListener('mousemove', (e) => {
+            const rect = testiSection.getBoundingClientRect();
+            const cx = rect.width / 2;
+            const cy = rect.height / 2;
+            const mx = e.clientX - rect.left - cx;
+            const my = e.clientY - rect.top - cy;
+
+            testiCards.forEach(card => {
+                const depth = parseFloat(card.dataset.depth) || 0.05;
+                const tx = mx * depth;
+                const ty = my * depth;
+                const rx = -(my * depth * 0.4);
+                const ry = mx * depth * 0.4;
+                card.style.transform = `translate(${tx}px, ${ty}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+                card.style.transition = 'transform 0.1s ease';
+            });
+        });
+
+        testiSection.addEventListener('mouseleave', () => {
+            testiCards.forEach(card => {
+                card.style.transform = 'translate(0,0) rotateX(0) rotateY(0)';
+                card.style.transition = 'transform 0.6s ease';
+            });
+        });
+
+        // 7. TIL TARJIMALARI
         const translations = {
             uz: {
                 nav_tours: "Yo'nalishlar", nav_serv: "Xizmatlar", nav_about: "Biz haqimizda",
@@ -1048,7 +1389,12 @@
                 tours_title: "Yo'nalishlar", city_dubai: "Dubay", desc_dubai: "Kelajak shahri bo'ylab premium sayohat.", city_maldives: "Maldiv", desc_maldives: "Shovqindan uzoqda, shaxsiy villangiz.", city_paris: "Parij", desc_paris: "San'at va yuqori moda poytaxti.", city_istanbul: "Istanbul", desc_istanbul: "Tarix va madaniyat o'chog'i.", book_btn: "Batafsil",
                 vid_sub: "Sayohat Atmosferasi", vid_title: "Biz Bilan Bulutlarda\nPervoz Qiling",
                 serv_title: "Bizning Xizmatlar", serv_1: "Viza Ko'magi", serv_1_desc: "Shenghen, AQSh va boshqa davlatlar uchun hujjatlarni tez va kafolatli tayyorlash.", serv_2: "Premium Mehmonxonalar", serv_2_desc: "Dunyoning eng yaxshi 5 yulduzli mehmonxona va kurortlarida joylashish.", serv_3: "VIP Transfer", serv_3_desc: "Aeroportdan mehmonxonagacha lyuks toifasidagi avtomobillarda kutib olish.",
-                team_title: "Ekspertlarimiz", team_pos: "Lavozimi:", team_role1: "Bosh Menejer", team_role2: "Viza Bo'yicha Mutaxassis", team_role3: "Sayohat Maslahatchisi",
+                stats_title: "Raqamlar\nBizni Ifoda Etadi", stats_desc: "O'n yillik tajribamiz davomida minglab mijozlarga ishonchli va hashamatli sayohat xizmatlarini ko'rsatib kelmoqdamiz.",
+                stat_1: "Xursand Mijozlar", stat_2: "Mamlakat", stat_3: "Yillik Tajriba", stat_4: "Mamnuniyat Darajasi",
+                testi_title: "Mijozlarimiz Fikri",
+                testi_1_text: "SkyLuxe bilan Dubayga borishim hayotimdagi eng yaxshi sayohat bo'ldi. Har bir detal mukammal tashkil qilingan edi. Yana albatta qaytaman!", testi_1_name: "Nilufar Rashidova",
+                testi_2_text: "Viza va transfer masalasida juda tezkor va professional xizmat ko'rsatishdi. Oilam bilan Maldivda dam olishimiz uchun hamma narsani a'lo darajada tayyorlab berishdi.", testi_2_name: "Jasur Mirzayev",
+                testi_3_text: "Parijda o'tkazgan 7 kunim tushimdagi kabi o'tdi. Mehmonxona tanlovi, ekskursiyalar va kutib olish xizmati — barchasi eng yuqori saviyada!", testi_3_name: "Malika Yusupova",
                 about_title: "Mukammallik\nChegarasi", about_desc: "SkyLuxe jamoasi har bir detalli o'ylangan mukammal logistika va xizmatlarni taqdim etadi. O'zbekiston bozorida 10 yillik tajribaga ega bo'lib, eng yuqori standartlarni joriy etganmiz.",
                 foot_big1: "Keyingi", foot_big2: "Manzil Qayer?", foot_text: "Ekspertlarimiz bilan bog'laning va shaxsiy sayohat rejangizni tuzing.", form_name: "Ismingiz", form_phone: "Telefon raqam", form_btn: "Jo'natish"
             },
@@ -1058,7 +1404,12 @@
                 tours_title: "Направления", city_dubai: "Дубай", desc_dubai: "Премиум тур по городу будущего.", city_maldives: "Мальдивы", desc_maldives: "Вдали от шума, ваша личная вилла.", city_paris: "Париж", desc_paris: "Столица искусства и моды.", city_istanbul: "Стамбул", desc_istanbul: "Очаг истории и культуры.", book_btn: "Подробнее",
                 vid_sub: "Атмосфера Путешествий", vid_title: "Летайте В Облаках\nВместе С Нами",
                 serv_title: "Наши Услуги", serv_1: "Визовая Поддержка", serv_1_desc: "Быстрое оформление документов для Шенгена, США и других стран.", serv_2: "Премиум Отели", serv_2_desc: "Размещение в лучших 5-звездочных отелях и курортах мира.", serv_3: "VIP Трансфер", serv_3_desc: "Встреча в аэропорту на автомобилях класса люкс.",
-                team_title: "Наши Эксперты", team_pos: "Должность:", team_role1: "Генеральный Менеджер", team_role2: "Визовый Специалист", team_role3: "Консультант По Туризму",
+                stats_title: "Цифры\nГоворят За Нас", stats_desc: "За 10 лет опыта мы обслужили тысячи клиентов на высшем уровне.",
+                stat_1: "Довольных Клиентов", stat_2: "Стран", stat_3: "Лет Опыта", stat_4: "Уровень Довольства",
+                testi_title: "Отзывы Клиентов",
+                testi_1_text: "Поездка в Дубай с SkyLuxe — лучшее путешествие в моей жизни. Каждая деталь была организована безупречно!", testi_1_name: "Нилуфар Рашидова",
+                testi_2_text: "Очень быстрое и профессиональное обслуживание по вопросам визы и трансфера. Всё для отдыха семьи на Мальдивах было подготовлено отлично.", testi_2_name: "Жасур Мирзаев",
+                testi_3_text: "7 дней в Париже прошли как во сне. Выбор отеля, экскурсии и встреча — всё на высшем уровне!", testi_3_name: "Малика Юсупова",
                 about_title: "Грань\nСовершенства", about_desc: "Команда SkyLuxe предоставляет идеальную логистику. Имея 10-летний опыт работы, мы внедрили самые высокие стандарты.",
                 foot_big1: "Куда", foot_big2: "Дальше?", foot_text: "Свяжитесь с экспертами и создайте план.", form_name: "Ваше имя", form_phone: "Телефон", form_btn: "Отправить"
             },
@@ -1068,7 +1419,12 @@
                 tours_title: "Destinations", city_dubai: "Dubai", desc_dubai: "Premium tour in the city of the future.", city_maldives: "Maldives", desc_maldives: "Far from noise, your private villa.", city_paris: "Paris", desc_paris: "Capital of art and high fashion.", city_istanbul: "Istanbul", desc_istanbul: "Heart of history and culture.", book_btn: "Details",
                 vid_sub: "Travel Atmosphere", vid_title: "Fly In The Clouds\nWith Us",
                 serv_title: "Our Services", serv_1: "Visa Support", serv_1_desc: "Fast document preparation for Schengen, USA, and other countries.", serv_2: "Premium Hotels", serv_2_desc: "Accommodation in the world's best 5-star hotels and resorts.", serv_3: "VIP Transfer", serv_3_desc: "Airport pickup in luxury category vehicles.",
-                team_title: "Our Experts", team_pos: "Position:", team_role1: "General Manager", team_role2: "Visa Specialist", team_role3: "Travel Consultant",
+                stats_title: "Numbers\nSpeak For Us", stats_desc: "Over 10 years, we have served thousands of clients with reliable and luxurious travel services.",
+                stat_1: "Happy Clients", stat_2: "Countries", stat_3: "Years Experience", stat_4: "Satisfaction Rate",
+                testi_title: "Client Reviews",
+                testi_1_text: "Traveling to Dubai with SkyLuxe was the best trip of my life. Every single detail was perfectly organized. I'll definitely be back!", testi_1_name: "Nilufar Rashidova",
+                testi_2_text: "Very fast and professional service with visa and transfer. Everything for our Maldives family vacation was prepared flawlessly.", testi_2_name: "Jasur Mirzayev",
+                testi_3_text: "My 7 days in Paris felt like a dream. Hotel selection, excursions and the pickup service — all at the highest level!", testi_3_name: "Malika Yusupova",
                 about_title: "Border Of\nExcellence", about_desc: "The SkyLuxe team provides perfectly planned logistics. With 10 years of experience, we have implemented the highest standards.",
                 foot_big1: "Where To", foot_big2: "Next?", foot_text: "Contact our experts and create your personal travel plan.", form_name: "Your Name", form_phone: "Phone Number", form_btn: "Submit"
             }
