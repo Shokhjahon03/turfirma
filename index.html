@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyLuxe | Noodatiy Sayohat</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Oswald:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ================= VARIABLES & RESET ================= */
+        :root {
+            --bg-color: #030014;
+            --text-main: #f5f5f7;
+            --text-muted: #a1a1aa;
+            --accent-1: #ff2a5f;
+            --accent-2: #00d2ff;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* ================= AMBIENT BACKGROUND ================= */
+        .ambient-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            overflow: hidden;
+            background: var(--bg-color);
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.5;
+            animation: floatOrb 20s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: var(--accent-1);
+        }
+
+        .orb-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: var(--accent-2);
+            animation-delay: -5s;
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.04;
+            pointer-events: none;
+            background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+
+        @keyframes floatOrb {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(10vw, 15vh) scale(1.2);
+            }
+        }
+
+        /* ================= YAXSHILANGAN PRELOADER ================= */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-color);
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .flight-path {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            border: 2px dashed rgba(0, 210, 255, 0.3);
+            border-radius: 50%;
+            animation: spinPath 4s linear infinite;
+        }
+
+        .loader-plane {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            color: var(--accent-2);
+            text-shadow: 0 0 15px var(--accent-2);
+        }
+
+        .loader-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 8px;
+            margin-top: 40px;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulseText 1.5s infinite alternate;
+        }
+
+        @keyframes spinPath {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulseText {
+            0% {
+                opacity: 0.5;
+                filter: blur(1px);
+            }
+
+            100% {
+                opacity: 1;
+                filter: blur(0px);
+            }
+        }
+
+        /* ================= AUTO SCROLL BUTTON ================= */
+        .auto-scroll-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 9999;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .auto-scroll-btn:hover {
+            background: var(--accent-2);
+            transform: scale(1.1);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+            border-color: transparent;
+        }
+
+        /* ================= NAVBAR ================= */
+        nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            padding: 30px 5%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 40px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px 30px;
+            border-radius: 40px;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            pointer-events: auto;
+        }
+
+        .nav-links li a {
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .nav-links li a:hover {
+            color: var(--accent-2);
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 5px;
+            pointer-events: auto;
+        }
+
+        .lang-switch button {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+            width: 45px;
+            height: 45px;
+        }
+
+        .lang-switch button.active {
+            background: var(--accent-1);
+            border-color: var(--accent-1);
+            font-weight: bold;
+        }
+
+        /* ================= HERO SECTION ================= */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(4rem, 10vw, 10rem);
+            line-height: 1;
+            text-transform: uppercase;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title span {
+            display: block;
+        }
+
+        .hero-title .stroke {
+            color: transparent;
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-img-container {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40vw;
+            height: 60vh;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            z-index: 1;
+        }
+
+        .hero-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-img-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, var(--bg-color) 0%, transparent 50%);
+        }
+
+        /* ================= HORIZONTAL SCROLL SECTION ================= */
+        .horizontal-section {
+            height: 400vh;
+            position: relative;
+        }
+
+        .sticky-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 0;
+        }
+
+        .sec-title-abs {
+            position: absolute;
+            top: 15%;
+            left: 5vw;
+            font-family: 'Oswald', sans-serif;
+            font-size: 4rem;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .track {
+            display: flex;
+            gap: 50px;
+            width: max-content;
+            padding: 0 5vw;
+            will-change: transform;
+            transition: transform 0.1s linear;
+        }
+
+        .h-card {
+            width: 450px;
+            height: 600px;
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            transition: 0.4s;
+        }
+
+        .h-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--accent-2);
+        }
+
+        .h-card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            opacity: 0.6;
+            transition: 0.5s;
+        }
+
+        .h-card:hover img {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+
+        .h-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, #000 0%, transparent 80%);
+            z-index: -1;
+        }
+
+        .h-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .card-price {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: var(--accent-1);
+            color: #fff;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            border-radius: 30px;
+        }
+
+        .btn-modern {
+            padding: 15px 30px;
+            border-radius: 30px;
+            background: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.4s;
+            width: max-content;
+        }
+
+        .btn-modern:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* ================= SCROLL VIDEO & TEXT SYNC (Rasmdagi Qism) ================= */
+        .video-section {
+            height: 300vh;
+            position: relative;
+        }
+
+        .video-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .video-sticky video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.4;
+            transition: opacity 0.5s;
+        }
+
+        .video-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            transition: transform 0.1s linear, opacity 0.1s linear;
+            will-change: transform, opacity;
+        }
+
+        .video-content h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(4rem, 8vw, 8rem);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .video-content p {
+            font-size: 1.5rem;
+            color: var(--accent-2);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        /* ================= SERVICES SECTION ================= */
+        .services-section {
+            padding: 150px 10%;
+            position: relative;
+            z-index: 5;
+            background: var(--bg-color);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .service-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 50px 30px;
+            border-radius: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: 0.4s;
+        }
+
+        .service-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-10px);
+            border-color: var(--accent-1);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--accent-2);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ================= TEAM SECTION ================= */
+        .team-section {
+            padding: 100px 10% 150px;
+            background: var(--bg-color);
+            position: relative;
+            z-index: 5;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .team-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 350px;
+        }
+
+        .team-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+            filter: grayscale(80%);
+        }
+
+        .team-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        .team-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            transform: translateY(20px);
+            transition: 0.4s;
+            opacity: 0;
+        }
+
+        .team-card:hover .team-info {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .team-info h4 {
+            font-size: 1.5rem;
+            font-family: 'Oswald', sans-serif;
+            color: #fff;
+        }
+
+        .team-info p {
+            color: var(--accent-2);
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        /* ================= ABOUT SECTION ================= */
+        .about-section {
+            padding: 100px 10%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            background: var(--bg-color);
+            z-index: 5;
+        }
+
+        .about-content {
+            max-width: 50%;
+        }
+
+        .about-content h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 4rem;
+            margin-bottom: 30px;
+        }
+
+        .about-images {
+            position: relative;
+            width: 40%;
+            height: 500px;
+        }
+
+        .abs-img {
+            position: absolute;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+
+        .img-1 {
+            width: 80%;
+            height: 80%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .img-2 {
+            width: 60%;
+            height: 60%;
+            bottom: -10%;
+            right: -10%;
+            z-index: 2;
+            border: 5px solid var(--bg-color);
+        }
+
+        /* ================= CONTACT FOOTER ================= */
+        .contact-footer {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid var(--glass-border);
+            padding: 100px 10% 50px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .big-footer-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(3rem, 6vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 40px;
+        }
+
+        .custom-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .custom-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1.2rem;
+            padding: 15px 0;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .custom-input:focus {
+            border-bottom-color: var(--accent-2);
+        }
+
+        .submit-btn {
+            background: var(--accent-2);
+            color: #000;
+            border: none;
+            padding: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .submit-btn:hover {
+            background: #fff;
+            transform: translateY(-5px);
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 1024px) {
+
+            .hero-img-container,
+            .about-images {
+                display: none;
+            }
+
+            .about-content {
+                max-width: 100%;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .track {
+                padding-left: 5vw;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                justify-content: center;
+                padding: 20px 0;
+            }
+
+            .horizontal-section,
+            .video-section {
+                height: auto;
+            }
+
+            .sticky-container,
+            .video-sticky {
+                position: relative;
+                height: auto;
+                padding: 100px 5%;
+                display: block;
+                overflow-x: hidden;
+            }
+
+            .track {
+                flex-direction: column;
+                width: 100%;
+                padding-left: 0;
+                transform: none !important;
+            }
+
+            .h-card {
+                width: 100%;
+                height: 400px;
+            }
+
+            .video-sticky video {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Yaxshilangan Preloader -->
+    <div id="loader">
+        <div class="flight-path">
+            <i class="fa-solid fa-plane loader-plane"></i>
+        </div>
+        <div class="loader-text">SKYLUXE</div>
+    </div>
+
+    <!-- Ambient orqa fon -->
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+    <div class="noise"></div>
+
+    <!-- Avto Scroll -->
+    <button class="auto-scroll-btn" id="autoScrollBtn" title="Auto Scroll">
+        <i class="fa-solid fa-play" id="scrollIcon"></i>
+    </button>
+
+    <!-- Navbar -->
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#tours" data-i18n="nav_tours">Yo'nalishlar</a></li>
+            <li><a href="#services" data-i18n="nav_serv">Xizmatlar</a></li>
+            <li><a href="#about" data-i18n="nav_about">Biz haqimizda</a></li>
+        </ul>
+        <div class="lang-switch">
+            <button class="active" onclick="changeLang('uz')">UZ</button>
+            <button onclick="changeLang('ru')">RU</button>
+            <button onclick="changeLang('en')">EN</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero">
+        <h1 class="hero-title">
+            <span data-i18n="hero_t1">Kashf Etish</span>
+            <span class="stroke" data-i18n="hero_t2">Vaqti Keldi</span>
+        </h1>
+        <div class="hero-img-container" id="heroImage">
+            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop"
+                alt="Flight">
+        </div>
+    </header>
+
+    <!-- HORIZONTAL SCROLL -->
+    <section class="horizontal-section" id="tours">
+        <div class="sticky-container">
+            <h2 class="sec-title-abs" data-i18n="tours_title">Yo'nalishlar</h2>
+            <div class="track" id="horizontalTrack">
+                <div class="h-card">
+                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=2070&auto=format&fit=crop"
+                        alt="Dubai">
+                    <div class="card-price">$1,200</div>
+                    <h3 data-i18n="city_dubai">Dubay</h3>
+                    <p data-i18n="desc_dubai">Kelajak shahri bo'ylab premium sayohat.</p>
+                    <button class="btn-modern" data-i18n="book_btn">Batafsil</button>
+                </div>
+                <div class="h-card">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop"
+                        alt="Maldives">
+                    <div class="card-price" style="background: var(--accent-2); color: #000;">$3,450</div>
+                    <h3 data-i18n="city_maldives">Maldiv</h3>
+                    <p data-i18n="desc_maldives">Shovqindan uzoqda, shaxsiy villangiz.</p>
+                    <button class="btn-modern" data-i18n="book_btn">Batafsil</button>
+                </div>
+                <div class="h-card">
+                    <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=2020&auto=format&fit=crop"
+                        alt="Paris">
+                    <div class="card-price">$2,100</div>
+                    <h3 data-i18n="city_paris">Parij</h3>
+                    <p data-i18n="desc_paris">San'at va yuqori moda poytaxti.</p>
+                    <button class="btn-modern" data-i18n="book_btn">Batafsil</button>
+                </div>
+                <div class="h-card">
+                    <img src="https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?q=80&w=2070&auto=format&fit=crop"
+                        alt="Istanbul">
+                    <div class="card-price" style="background: var(--accent-2); color: #000;">$950</div>
+                    <h3 data-i18n="city_istanbul">Istanbul</h3>
+                    <p data-i18n="desc_istanbul">Tarix va madaniyat o'chog'i.</p>
+                    <button class="btn-modern" data-i18n="book_btn">Batafsil</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCROLL VIDEO & TEXT SYNC (Rasmdagi Section) -->
+    <section class="video-section" id="video-experience">
+        <div class="video-sticky">
+            <!-- Mahalliy bgvi.mp4 ga moslangan -->
+            <video id="scrollVideo" muted playsinline preload="auto">
+                <source src="bgvi.mp4" type="video/mp4">
+            </video>
+
+            <div class="video-content" id="vidTextContent">
+                <p data-i18n="vid_sub">Sayohat Atmosferasi</p>
+                <h2 data-i18n="vid_title">Biz Bilan Bulutlarda<br>Pervoz Qiling</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="services-section" id="services">
+        <h2 style="font-family: 'Oswald', sans-serif; font-size: 3.5rem; text-align: center;" data-i18n="serv_title">
+            Bizning Xizmatlar</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fa-solid fa-passport service-icon"></i>
+                <h3 data-i18n="serv_1">Viza Ko'magi</h3>
+                <p data-i18n="serv_1_desc">Shenghen, AQSh va boshqa davlatlar uchun hujjatlarni tez va kafolatli
+                    tayyorlash.</p>
+            </div>
+            <div class="service-card">
+                <i class="fa-solid fa-hotel service-icon"></i>
+                <h3 data-i18n="serv_2">Premium Mehmonxonalar</h3>
+                <p data-i18n="serv_2_desc">Dunyoning eng yaxshi 5 yulduzli mehmonxona va kurortlarida joylashish.</p>
+            </div>
+            <div class="service-card">
+                <i class="fa-solid fa-car service-icon"></i>
+                <h3 data-i18n="serv_3">VIP Transfer</h3>
+                <p data-i18n="serv_3_desc">Aeroportdan mehmonxonagacha lyuks toifasidagi avtomobillarda kutib olish.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM SECTION -->
+
+
+    <!-- ABOUT SECTION -->
+    <section class="about-section" id="about">
+        <div class="about-content">
+            <h2 data-i18n="about_title">Mukammallik<br>Chegarasi</h2>
+            <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;"
+                data-i18n="about_desc">SkyLuxe jamoasi har bir detalli o'ylangan mukammal logistika va xizmatlarni
+                taqdim etadi. O'zbekiston bozorida 10 yillik tajribaga ega bo'lib, eng yuqori standartlarni joriy
+                etganmiz.</p>
+        </div>
+        <div class="about-images">
+            <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop"
+                class="abs-img img-1" alt="Travel">
+            <img src="https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?q=80&w=2069&auto=format&fit=crop"
+                class="abs-img img-2" alt="Nature">
+        </div>
+    </section>
+
+    <!-- CONTACT FOOTER -->
+    <footer class="contact-footer">
+        <div class="footer-grid">
+            <div>
+                <h2 class="big-footer-title"><span data-i18n="foot_big1">Keyingi</span><br><span
+                        style="color: var(--accent-2);" data-i18n="foot_big2">Manzil Qayer?</span></h2>
+                <p style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px;" data-i18n="foot_text">
+                    Ekspertlarimiz bilan bog'laning va shaxsiy sayohat rejangizni tuzing.</p>
+            </div>
+            <form class="custom-form" onsubmit="event.preventDefault(); alert('Xabar yuborildi!');">
+                <input type="text" class="custom-input" data-i18n-place="form_name" placeholder="Ismingiz" required>
+                <input type="tel" class="custom-input" data-i18n-place="form_phone" placeholder="Telefon raqam"
+                    required>
+                <button type="submit" class="submit-btn" data-i18n="form_btn">Jo'natish</button>
+            </form>
+        </div>
+    </footer>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // 1. ISHONCHLI PRELOADER YOPILISHI
+        const hideLoader = () => {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 800);
+            }
+        };
+        // Oyna yuklanganda yoki har ehtimolga qarshi 2.5 soniyadan so'ng yopiladi
+        window.addEventListener('load', hideLoader);
+        setTimeout(hideLoader, 2500);
+
+        // 2. SCROLL EVENTS (Horizontal + Text/Video Sync)
+        const horizontalSection = document.getElementById('tours');
+        const track = document.getElementById('horizontalTrack');
+        const heroImage = document.getElementById('heroImage');
+
+        const videoSection = document.getElementById('video-experience');
+        const scrollVideo = document.getElementById('scrollVideo');
+        const vidTextContent = document.getElementById('vidTextContent');
+
+        window.addEventListener('scroll', () => {
+            requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+                const winHeight = window.innerHeight;
+
+                // A) Hero Parallax
+                if (heroImage && scrollY < winHeight) {
+                    heroImage.style.transform = `translateY(calc(-50% + ${scrollY * 0.3}px)) scale(${1 + scrollY * 0.0005})`;
+                    heroImage.style.opacity = 1 - (scrollY / winHeight);
+                }
+
+                // B) Horizontal Scroll
+                if (window.innerWidth > 768) {
+                    const hTop = horizontalSection.offsetTop;
+                    const hHeight = horizontalSection.offsetHeight;
+
+                    if (scrollY >= hTop && scrollY <= (hTop + hHeight - winHeight)) {
+                        let progress = (scrollY - hTop) / (hHeight - winHeight);
+                        let maxScroll = track.scrollWidth - window.innerWidth + (window.innerWidth * 0.1);
+                        track.style.transform = `translateX(-${progress * maxScroll}px)`;
+                    } else if (scrollY < hTop) {
+                        track.style.transform = `translateX(0px)`;
+                    } else if (scrollY > (hTop + hHeight - winHeight)) {
+                        let maxScroll = track.scrollWidth - window.innerWidth + (window.innerWidth * 0.1);
+                        track.style.transform = `translateX(-${maxScroll}px)`;
+                    }
+                }
+
+                // C) VIDEO VA TEXT SCROLL SYNC (Rasmdagi xususiyat qo'shildi)
+                if (window.innerWidth > 768) {
+                    const vTop = videoSection.offsetTop;
+                    const vHeight = videoSection.offsetHeight;
+
+                    if (scrollY >= vTop && scrollY <= (vTop + vHeight - winHeight)) {
+                        let progress = (scrollY - vTop) / (vHeight - winHeight);
+
+                        // Video sync
+                        if (scrollVideo && scrollVideo.readyState >= 2) {
+                            scrollVideo.currentTime = progress * scrollVideo.duration;
+                        }
+
+                        // Text sync (Zoom out va xira tortish effekti)
+                        if (vidTextContent) {
+                            // Text pastdan tepaga qarab harakatlanadi va kattalashadi
+                            vidTextContent.style.transform = `scale(${1 + progress * 0.8})`;
+                            // Oxiriga yetganda sekin yo'qoladi
+                            vidTextContent.style.opacity = 1 - (progress * 1.5);
+                        }
+                    }
+                }
+            });
+        });
+
+        // 3. AUTO SCROLL
+        const autoScrollBtn = document.getElementById('autoScrollBtn');
+        const scrollIcon = document.getElementById('scrollIcon');
+        let isAutoScrolling = false;
+        let animationFrameId;
+
+        function smoothScrollLoop() {
+            if (isAutoScrolling) {
+                window.scrollBy(0, 2);
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
+                    toggleAutoScroll(); return;
+                }
+                animationFrameId = requestAnimationFrame(smoothScrollLoop);
+            }
+        }
+        function toggleAutoScroll() {
+            isAutoScrolling = !isAutoScrolling;
+            if (isAutoScrolling) {
+                scrollIcon.classList.replace('fa-play', 'fa-pause');
+                autoScrollBtn.style.background = 'var(--accent-2)'; autoScrollBtn.style.color = '#000';
+                smoothScrollLoop();
+            } else {
+                scrollIcon.classList.replace('fa-pause', 'fa-play');
+                autoScrollBtn.style.background = 'rgba(255,255,255,0.1)'; autoScrollBtn.style.color = '#fff';
+                cancelAnimationFrame(animationFrameId);
+            }
+        }
+        autoScrollBtn.addEventListener('click', toggleAutoScroll);
+        window.addEventListener('wheel', () => {
+            if (isAutoScrolling) { cancelAnimationFrame(animationFrameId); setTimeout(() => { if (isAutoScrolling) smoothScrollLoop(); }, 1500); }
+        });
+
+        // 4. TIL TARJIMALARI
+        const translations = {
+            uz: {
+                nav_tours: "Yo'nalishlar", nav_serv: "Xizmatlar", nav_about: "Biz haqimizda",
+                hero_t1: "Kashf Etish", hero_t2: "Vaqti Keldi",
+                tours_title: "Yo'nalishlar", city_dubai: "Dubay", desc_dubai: "Kelajak shahri bo'ylab premium sayohat.", city_maldives: "Maldiv", desc_maldives: "Shovqindan uzoqda, shaxsiy villangiz.", city_paris: "Parij", desc_paris: "San'at va yuqori moda poytaxti.", city_istanbul: "Istanbul", desc_istanbul: "Tarix va madaniyat o'chog'i.", book_btn: "Batafsil",
+                vid_sub: "Sayohat Atmosferasi", vid_title: "Biz Bilan Bulutlarda\nPervoz Qiling",
+                serv_title: "Bizning Xizmatlar", serv_1: "Viza Ko'magi", serv_1_desc: "Shenghen, AQSh va boshqa davlatlar uchun hujjatlarni tez va kafolatli tayyorlash.", serv_2: "Premium Mehmonxonalar", serv_2_desc: "Dunyoning eng yaxshi 5 yulduzli mehmonxona va kurortlarida joylashish.", serv_3: "VIP Transfer", serv_3_desc: "Aeroportdan mehmonxonagacha lyuks toifasidagi avtomobillarda kutib olish.",
+                team_title: "Ekspertlarimiz", team_pos: "Lavozimi:", team_role1: "Bosh Menejer", team_role2: "Viza Bo'yicha Mutaxassis", team_role3: "Sayohat Maslahatchisi",
+                about_title: "Mukammallik\nChegarasi", about_desc: "SkyLuxe jamoasi har bir detalli o'ylangan mukammal logistika va xizmatlarni taqdim etadi. O'zbekiston bozorida 10 yillik tajribaga ega bo'lib, eng yuqori standartlarni joriy etganmiz.",
+                foot_big1: "Keyingi", foot_big2: "Manzil Qayer?", foot_text: "Ekspertlarimiz bilan bog'laning va shaxsiy sayohat rejangizni tuzing.", form_name: "Ismingiz", form_phone: "Telefon raqam", form_btn: "Jo'natish"
+            },
+            ru: {
+                nav_tours: "Направления", nav_serv: "Услуги", nav_about: "О нас",
+                hero_t1: "Время", hero_t2: "Открывать",
+                tours_title: "Направления", city_dubai: "Дубай", desc_dubai: "Премиум тур по городу будущего.", city_maldives: "Мальдивы", desc_maldives: "Вдали от шума, ваша личная вилла.", city_paris: "Париж", desc_paris: "Столица искусства и моды.", city_istanbul: "Стамбул", desc_istanbul: "Очаг истории и культуры.", book_btn: "Подробнее",
+                vid_sub: "Атмосфера Путешествий", vid_title: "Летайте В Облаках\nВместе С Нами",
+                serv_title: "Наши Услуги", serv_1: "Визовая Поддержка", serv_1_desc: "Быстрое оформление документов для Шенгена, США и других стран.", serv_2: "Премиум Отели", serv_2_desc: "Размещение в лучших 5-звездочных отелях и курортах мира.", serv_3: "VIP Трансфер", serv_3_desc: "Встреча в аэропорту на автомобилях класса люкс.",
+                team_title: "Наши Эксперты", team_pos: "Должность:", team_role1: "Генеральный Менеджер", team_role2: "Визовый Специалист", team_role3: "Консультант По Туризму",
+                about_title: "Грань\nСовершенства", about_desc: "Команда SkyLuxe предоставляет идеальную логистику. Имея 10-летний опыт работы, мы внедрили самые высокие стандарты.",
+                foot_big1: "Куда", foot_big2: "Дальше?", foot_text: "Свяжитесь с экспертами и создайте план.", form_name: "Ваше имя", form_phone: "Телефон", form_btn: "Отправить"
+            },
+            en: {
+                nav_tours: "Destinations", nav_serv: "Services", nav_about: "About",
+                hero_t1: "Time To", hero_t2: "Discover",
+                tours_title: "Destinations", city_dubai: "Dubai", desc_dubai: "Premium tour in the city of the future.", city_maldives: "Maldives", desc_maldives: "Far from noise, your private villa.", city_paris: "Paris", desc_paris: "Capital of art and high fashion.", city_istanbul: "Istanbul", desc_istanbul: "Heart of history and culture.", book_btn: "Details",
+                vid_sub: "Travel Atmosphere", vid_title: "Fly In The Clouds\nWith Us",
+                serv_title: "Our Services", serv_1: "Visa Support", serv_1_desc: "Fast document preparation for Schengen, USA, and other countries.", serv_2: "Premium Hotels", serv_2_desc: "Accommodation in the world's best 5-star hotels and resorts.", serv_3: "VIP Transfer", serv_3_desc: "Airport pickup in luxury category vehicles.",
+                team_title: "Our Experts", team_pos: "Position:", team_role1: "General Manager", team_role2: "Visa Specialist", team_role3: "Travel Consultant",
+                about_title: "Border Of\nExcellence", about_desc: "The SkyLuxe team provides perfectly planned logistics. With 10 years of experience, we have implemented the highest standards.",
+                foot_big1: "Where To", foot_big2: "Next?", foot_text: "Contact our experts and create your personal travel plan.", form_name: "Your Name", form_phone: "Phone Number", form_btn: "Submit"
+            }
+        };
+
+        function changeLang(lang) {
+            document.querySelectorAll('.lang-switch button').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll("[data-i18n]").forEach(el => {
+                const key = el.getAttribute("data-i18n");
+                if (translations[lang][key]) el.innerText = translations[lang][key];
+            });
+            document.querySelectorAll("[data-i18n-place]").forEach(el => {
+                const key = el.getAttribute("data-i18n-place");
+                if (translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+        }
+    </script>
+</body>
+
+</html>
